@@ -18,6 +18,7 @@ trait SparkCommand {
       .set("spark.hadoop.parquet.block.size", (64*1024*1024).toString)
       .set("spark.hadoop.parquet.page.size", (1*1024*1024).toString)
       .set("spark.hadoop.parquet.enable.summary-metadata", "false")
+      .set("spark.hadoop.fs.s3a.aws.credentials.provider", "com.amazonaws.auth.DefaultAWSCredentialsProviderChain")
       .set("spark.executionEnv.AWS_PROFILE", Properties.envOrElse("AWS_PROFILE", "default"))
 
     SparkSession.builder().config(conf).getOrCreate()

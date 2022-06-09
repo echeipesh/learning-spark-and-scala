@@ -26,6 +26,7 @@ trait TestEnvironment extends AnyFunSpec
       config("spark.hadoop.parquet.block.size", 64*1024*1024 /* bytes */).
       config("spark.hadoop.parquet.page.size", 1*1024*1024 /* bytes */).
       config("spark.hadoop.parquet.enable.dictionary", true).
+      config("spark.hadoop.fs.s3a.aws.credentials.provider", "com.amazonaws.auth.DefaultAWSCredentialsProviderChain").
       getOrCreate()
       spark.sparkContext.setLogLevel("ERROR")
       spark
