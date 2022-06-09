@@ -27,31 +27,31 @@ import java.net._
 Test / fork := true
 Test / outputStrategy := Some(StdoutOutput)
 
-//// Settings for sbt-assembly plugin which builds fat jars for spark-submit
-//assembly / assemblyMergeStrategy := {
-//  case "reference.conf"   => MergeStrategy.concat
-//  case "application.conf" => MergeStrategy.concat
-//  case PathList("META-INF", xs @ _*) =>
-//    xs match {
-//      case ("MANIFEST.MF" :: Nil) =>
-//        MergeStrategy.discard
-//      case ("services" :: _ :: Nil) =>
-//        MergeStrategy.concat
-//      case ("javax.media.jai.registryFile.jai" :: Nil) | ("registryFile.jai" :: Nil) | ("registryFile.jaiext" :: Nil) =>
-//        MergeStrategy.concat
-//      case (name :: Nil) if name.endsWith(".RSA") || name.endsWith(".DSA") || name.endsWith(".SF") =>
-//        MergeStrategy.discard
-//      case _ =>
-//        MergeStrategy.first
-//      }
-//  case _ => MergeStrategy.first
-//}
-//
-//
-//assembly / assemblyShadeRules := {
-//  val shadePackage = "earth.ceervest.shaded"
-//  Seq(
-//    ShadeRule.rename("shapeless.**" -> s"$shadePackage.shapeless.@1").inAll,
-//    ShadeRule.rename("cats.kernel.**" -> s"$shadePackage.cats.kernel.@1").inAll
-//  )
-//}
+// Settings for sbt-assembly plugin which builds fat jars for spark-submit
+assembly / assemblyMergeStrategy := {
+ case "reference.conf"   => MergeStrategy.concat
+ case "application.conf" => MergeStrategy.concat
+ case PathList("META-INF", xs @ _*) =>
+   xs match {
+     case ("MANIFEST.MF" :: Nil) =>
+       MergeStrategy.discard
+     case ("services" :: _ :: Nil) =>
+       MergeStrategy.concat
+     case ("javax.media.jai.registryFile.jai" :: Nil) | ("registryFile.jai" :: Nil) | ("registryFile.jaiext" :: Nil) =>
+       MergeStrategy.concat
+     case (name :: Nil) if name.endsWith(".RSA") || name.endsWith(".DSA") || name.endsWith(".SF") =>
+       MergeStrategy.discard
+     case _ =>
+       MergeStrategy.first
+     }
+ case _ => MergeStrategy.first
+}
+
+
+assembly / assemblyShadeRules := {
+ val shadePackage = "earth.ceervest.shaded"
+ Seq(
+   ShadeRule.rename("shapeless.**" -> s"$shadePackage.shapeless.@1").inAll,
+   ShadeRule.rename("cats.kernel.**" -> s"$shadePackage.cats.kernel.@1").inAll
+ )
+}
